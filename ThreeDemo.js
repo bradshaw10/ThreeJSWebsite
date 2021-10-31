@@ -1,3 +1,6 @@
+import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
@@ -20,5 +23,28 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
 
 const line = new THREE.Line( geometry, material );
 
-scene.add( line );
-renderer.render( scene, camera );
+const loader = new GLTFLoader();
+
+loader.load( 'assets/models/wraith.glb', function ( gltf ) {
+
+	scene.add( gltf.scene );
+	console.log(scene)
+
+
+}, undefined, function ( error ) {
+
+	console.error( error );
+
+} );
+
+const light = new THREE.DirectionalLight(0xFFFFF, 1);
+light.position.set(2,2,5);
+scene.add(light);
+	scene.add( line );
+
+function animate(){
+	requestAnimationFrame(animate);
+	renderer.render( scene, camera );
+}
+
+animate()
