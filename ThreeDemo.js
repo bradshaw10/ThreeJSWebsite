@@ -25,10 +25,13 @@ const line = new THREE.Line( geometry, material );
 
 const loader = new GLTFLoader();
 
-loader.load( 'assets/models/wraith.glb', function ( gltf ) {
+loader.load( 'assets/models/wraith.glb', function ( glb ) {
 
-	scene.add( gltf.scene );
-	console.log(scene)
+	const root = glb.scene;
+	root.scale.set(0.5, 0.5, 0.5);
+
+	scene.add( root );
+	console.log(glb.scene)
 
 
 }, undefined, function ( error ) {
